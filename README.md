@@ -1,1 +1,1 @@
-# dzien_nauczyciela
+# Strona z życzeniami na dzień nauczyciela

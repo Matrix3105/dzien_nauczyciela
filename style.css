@@ -1,0 +1,113 @@
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --tlo:#fff0d6;
+  --tekst:#3a2a14;
+  --papier:#fffdf6;
+  --linie:#c3d7ec;
+  --margines:#e98a8a;
+  --atrament:#23354f;
+  --akcent:#e8523f;
+  --akcent-tekst:#ffffff;
+  --ramka:#d9c3a0;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --tlo:#1d1a16;
+    --tekst:#f1e6d0;
+    --papier:#2a2722;
+    --linie:#3d4a5c;
+    --margines:#8a4a4a;
+    --atrament:#e8eefb;
+    --akcent:#f06a57;
+    --akcent-tekst:#1d1a16;
+    --ramka:#4a3f2f;
+  }
+}
+:root[data-theme="dark"]{
+  --tlo:#1d1a16;
+  --tekst:#f1e6d0;
+  --papier:#2a2722;
+  --linie:#3d4a5c;
+  --margines:#8a4a4a;
+  --atrament:#e8eefb;
+  --akcent:#f06a57;
+  --akcent-tekst:#1d1a16;
+  --ramka:#4a3f2f;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{
+  margin:0;min-height:100%;
+  background:var(--tlo);color:var(--tekst);
+  font-family:"Nunito",system-ui,sans-serif;
+  display:flex;flex-direction:column;align-items:center;
+  padding:28px 16px 40px;overflow-x:hidden;
+}
+h1{
+  font-family:"Caveat",cursive;font-size:clamp(2.4rem,8vw,4.2rem);
+  margin:8px 0 4px;text-align:center;
+}
+h1 span{display:inline-block;animation:skok 2.4s ease-in-out infinite}
+h1 span:nth-child(2){animation-delay:.2s}
+h1 span:nth-child(3){animation-delay:.4s}
+@keyframes skok{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+.podtytul{margin:0 0 26px;opacity:.8;text-align:center}
+.kartka{
+  position:relative;width:100%;max-width:640px;min-height:308px;
+  background:
+    linear-gradient(90deg,transparent 46px,var(--margines) 46px,var(--margines) 48px,transparent 48px),
+    repeating-linear-gradient(transparent 0 43px,var(--linie) 43px 44px),
+    var(--papier);
+  border:2px solid var(--ramka);border-radius:6px;
+  box-shadow:0 10px 24px rgba(0,0,0,.2);
+  padding:10px 22px 22px 66px;
+  transform:rotate(-.8deg);z-index:2;
+}
+.tekst{
+  font-family:"Caveat",cursive;color:var(--atrament);
+  font-size:clamp(1.7rem,5.5vw,2.2rem);line-height:44px;margin:0;
+}
+.tekst{min-height:176px}
+.slowo{display:inline-block;white-space:nowrap}
+.olowek{
+  position:absolute;left:0;top:0;width:50px;height:110px;
+  padding:0;border:0;background:none;cursor:pointer;z-index:5;
+  transition:transform .07s linear;
+  filter:drop-shadow(3px 5px 3px rgba(0,0,0,.25));
+}
+.korpus{
+  width:100%;height:100%;transform-origin:50% 98%;
+  transform:rotate(28deg);animation:czekaj 2.2s ease-in-out infinite;
+}
+.olowek.pisze .korpus{animation:pisanie .16s ease-in-out infinite}
+.olowek.radosc .korpus{animation:radosc .6s ease-out}
+@keyframes czekaj{0%,100%{transform:rotate(24deg)}50%{transform:rotate(34deg)}}
+@keyframes pisanie{0%,100%{transform:rotate(25deg)}50%{transform:rotate(31deg)}}
+@keyframes radosc{
+  0%{transform:rotate(28deg) translateY(0)}
+  35%{transform:rotate(10deg) translateY(-26px)}
+  70%{transform:rotate(40deg) translateY(-8px)}
+  100%{transform:rotate(28deg) translateY(0)}
+}
+.oko{transform-box:fill-box;transform-origin:center;animation:mrug 4s infinite}
+@keyframes mrug{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.panel{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+  margin-top:26px;position:relative;z-index:2;
+}
+button.przycisk{
+  padding:12px 22px;border:0;border-radius:12px;cursor:pointer;
+  background:var(--akcent);color:var(--akcent-tekst);
+  font:inherit;font-weight:700;font-size:1rem;transition:transform .15s;
+}
+button.przycisk:hover{transform:scale(1.05) rotate(-1deg)}
+button.przycisk:active{transform:scale(.96)}
+button.przycisk.drugi{background:transparent;color:var(--tekst);border:2px solid var(--ramka)}
+.licznik{margin-top:14px;font-size:.9rem;opacity:.7;position:relative;z-index:2}
+.spadek{position:fixed;top:-60px;pointer-events:none;z-index:1;animation:spadaj linear forwards}
+@keyframes spadaj{to{transform:translateY(115vh) rotate(var(--obrot))}}
+@media (prefers-reduced-motion:reduce){
+  h1 span,.korpus,.oko{animation:none}
+}

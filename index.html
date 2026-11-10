@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dzień Nauczyciela</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1><span>Dzień</span> <span>Nauczyciela</span> <span>🍎</span></h1>
+<p class="podtytul">Kliknij ołówek, a napisze coś od nas.</p>
+
+<div class="kartka" id="kartka">
+  <p class="tekst" id="tekst"></p>
+  <button class="olowek" id="olowek" aria-label="Napisz życzenia">
+    <div class="korpus">
+      <svg viewBox="0 0 50 110" width="50" height="110" aria-hidden="true">
+        <rect x="10" y="0" width="30" height="14" rx="6" fill="#f2a0b0"/>
+        <rect x="10" y="13" width="30" height="8" fill="#b8bcc4"/>
+        <rect x="10" y="21" width="30" height="58" fill="#f6c933"/>
+        <rect x="10" y="21" width="8" height="58" fill="#e8b51c"/>
+        <rect x="32" y="21" width="8" height="58" fill="#ffd95c"/>
+        <path d="M10 79 L40 79 L25 108 Z" fill="#f1d3a3"/>
+        <path d="M19 94 L31 94 L25 108 Z" fill="#3a3a44"/>
+        <ellipse class="oko" cx="19" cy="42" rx="2.6" ry="3.4" fill="#2b2118"/>
+        <ellipse class="oko" cx="31" cy="42" rx="2.6" ry="3.4" fill="#2b2118"/>
+        <circle cx="15" cy="52" r="3" fill="#f08a8a" opacity=".6"/>
+        <circle cx="35" cy="52" r="3" fill="#f08a8a" opacity=".6"/>
+        <path d="M20 54 Q25 61 30 54" stroke="#2b2118" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </button>
+</div>
+
+<div class="panel">
+  <button class="przycisk" id="dalej">Napisz kolejne ✏️</button>
+  <button class="przycisk drugi" id="kopiuj">Kopiuj</button>
+</div>
+<div class="licznik" id="licznik">Napisane życzenia: 0</div>
+
+<script>
+const zyczenia=[
+  "Dziękujemy, że wciąż wierzysz w naszą klasę. Nawet wtedy, gdy my sami przestajemy.",
+  "Przepraszamy za każdy raz, kiedy udawaliśmy, że słuchamy. Słuchaliśmy. Czasem.",
+  "To, czego nas uczysz, zostanie w głowie dłużej niż cokolwiek z kartkówki.",
+  "Życzymy działającego rzutnika, wi-fi bez fochów i kredy, która się nie łamie.",
+  "Dziś należy Ci się herbata, święty spokój i zero zeszytów do sprawdzenia.",
+  "Uczysz nas nie tylko, jak zdać, ale jak myśleć. To rzadkie i naprawdę to widzimy.",
+  "Obiecujemy poprawę. Prawie. W przyszłym roku. Może.",
+  "Gdyby każda lekcja była jak Twoja, nikt nie patrzyłby na zegar. No, prawie nikt.",
+  "Dzięki, że potrafisz wymagać i jednocześnie być normalnym człowiekiem. Mało kto to umie.",
+  "Niech dzwonek zawsze dzwoni na czas, a poniedziałki będą krótsze.",
+  "Dziękujemy za cierpliwość, której chyba nie da się kupić w żadnym sklepie.",
+  "Życzymy Ci klasy, która odrabia zadania sama z siebie. Wiemy, że to science fiction, ale marzyć wolno.",
+  "Dzięki, że pamiętasz, że za tym dziennikiem są ludzie, a nie tylko numerki.",
+  "Niech Ci kawa stygnie tylko trochę, a nigdy całkiem.",
+  "Życzymy Ci ciszy na lekcji. Choćby przez pięć minut. Za to należy się rekord świata.",
+  "Dzięki Tobie niektóre przedmioty przestały nam się kojarzyć z cierpieniem.",
+  "Wiemy, że ściągi widzisz z drugiego końca sali. Dziękujemy, że czasem udajesz, że nie.",
+  "Życzymy dużo zdrowia, jeszcze więcej nerwów ze stali i klasy, która pisze bez błędów ortograficznych.",
+  "Dziękujemy, że nie poddajesz się nawet wtedy, gdy po raz trzeci tłumaczysz to samo.",
+  "Niech każda Twoja lekcja kończy się pytaniem „a to już dzwonek?”.",
+  "Jesteś jedną z tych osób, które po latach wspomina się dobrze. Już dziś wiemy, że tak będzie.",
+  "Dziękujemy za każde „dobrze, spróbuj jeszcze raz” zamiast „zła odpowiedź”.",
+  "Życzymy Ci, żeby w Twojej torbie zawsze był zapasowy długopis, bo my swoich i tak nie mamy.",
+  "Dzięki, że widzisz w nas więcej, niż pokazują nasze oceny.",
+  "Niech dziś nikt Ci nie powie, że zapomniał zeszytu. Chociaż jeden dzień.",
+  "Za wszystkie lekcje, które trwały za długo, i te, które skończyły się za szybko. Dziękujemy za jedne i drugie.",
+  "Życzymy Ci takiego urlopu, podczas którego nikt nie zacznie zdania od „przepraszam, ale…”.",
+  "Dziękujemy, że uczysz nas, że błąd to nie koniec świata, tylko początek poprawki.",
+  "Gdyby istniał ranking nauczycieli, w naszych głowach już dawno jesteś na podium.",
+  "Niech Twoje plecy nie bolą od ciągłego pochylania się nad naszymi zeszytami.",
+  "Czasem narzekamy, ale kiedy trzeba, wiemy, do kogo przyjść. Dzięki, że można na Ciebie liczyć.",
+  "Życzymy Ci tylu uśmiechów w tym roku, ile razy słyszysz „ale ja to miałem w domu”.",
+  "Dziękujemy, że nasze najgłupsze pytania traktujesz poważnie.",
+  "Niech żaden sprawdzian nie wyjdzie gorzej, niż się spodziewamy. A spodziewamy się różnie.",
+  "Dziękujemy za momenty, w których zamiast krzyczeć wystarczyło jedno spojrzenie. Skuteczniejsze niż tysiąc uwag.",
+  "Życzymy mocnych nerwów, świętego spokoju i wolnego miejsca parkingowego pod szkołą.",
+  "Dzięki, że tłumaczysz tak, żeby dało się zrozumieć. To naprawdę nie jest oczywiste.",
+  "Dziś to my powinniśmy Ci odrabiać lekcje, ale obiecujemy tylko, że będziemy się starać.",
+  "Niech Twój dzień będzie jak dobra lekcja: ciekawy, szybki i bez niespodziewanych kartkówek.",
+  "Dziękujemy, że wierzysz w nas bardziej niż my sami. Ten kredyt zaufania na pewno spłacimy.",
+  "Życzymy, żeby tablica była czysta, gąbka mokra, a markery pełne.",
+  "Dzięki Tobie wiemy, że nauka może być czymś więcej niż wkuwaniem na pamięć.",
+  "Wiemy, ile pracy wkładasz w to, czego nie widać: sprawdzanie, przygotowania, wieczory z czerwonym długopisem. Dziękujemy.",
+  "Niech nikt dziś nie zgubi dziennika, kluczy do sali ani Twojej cierpliwości.",
+  "Za każdy uśmiech w poniedziałek rano. To jest prawdziwa supermoc.",
+  "Wiemy, że dostaniesz dziś mnóstwo czekoladek. My dorzucamy coś, co nie roztopi się w torbie: szczere dziękujemy.",
+  "Dziękujemy, że po Twoich lekcjach wychodzimy trochę mądrzejsi. Albo przynajmniej mniej zagubieni.",
+  "Dużo siły, mało stresu, samych grzecznych klas i ani jednego „ale ja nie wiedziałem, że było zadane”.",
+  "Dziękujemy, że nie oceniasz nas tylko po tym, ile umiemy, ale też po tym, ile się staramy.",
+  "Niech szkoła będzie miejscem, do którego chce się wracać po wakacjach. My już trochę tęsknimy.",
+  "Życzymy jednego dnia bez kserówek, bez dziennika elektronicznego i bez zebrania rady pedagogicznej.",
+  "Nikt nie mówi Ci tego tak często, jak powinien, więc my mówimy teraz: dziękujemy.",
+  "Dzięki, że potrafisz śmiać się z własnych żartów. I z naszych też, nawet tych słabych.",
+  "Niech w drukarce nigdy nie zabraknie tuszu, zwłaszcza przed sprawdzianem.",
+  "Gdyby za cierpliwość dawano medale, mielibyśmy Cię na podium z rekordem życiowym.",
+  "Dziękujemy, że zawsze znajdziesz chwilę, nawet jeśli ma to być tylko „no dobra, pokaż”.",
+  "Życzymy urlopu w miejscu, gdzie nikt nie wie, co to jest odmiana przez przypadki.",
+  "Dzięki Tobie nie boimy się pytać. To chyba najważniejsza rzecz, jakiej można się w szkole nauczyć.",
+  "Niech każdy dzień w szkole będzie choć trochę lepszy niż ostatni sprawdzian.",
+  "Za każdą lekcję, na której było coś więcej niż temat w zeszycie. Te pamiętamy najlepiej.",
+  "Wybacz nam spóźnienia, zapomniane zeszyty i telefony pod ławką. Doceniamy Cię mimo to. A właściwie dzięki temu, że to wszystko wytrzymujesz.",
+  "Życzymy czasu na książkę, spacer i herbatę, której nikt nie przerwie dzwonkiem.",
+  "Dziękujemy za wymagania, które wtedy nas denerwowały, a dziś okazują się bardzo dobrym pomysłem.",
+  "Niech ten dzień będzie dla Ciebie lżejszy niż nasze plecaki.",
+  "Dziękujemy, że nie trzeba się Ciebie bać, żeby Cię szanować.",
+  "Życzymy tylu dobrych wspomnień ze szkoły, ile razy mówiliśmy „jeszcze minutkę” przy dzwonku.",
+  "Jeśli kiedyś zostaniemy kimś, to w dużej części dzięki Tobie. Jeśli nie, to na pewno nie przez Ciebie.",
+  "Dziękujemy, że z nami wytrzymujesz. Wiemy, że to nie zawsze jest łatwe, i bardzo to doceniamy.",
+  "Życzymy Ci klasy, która kiedyś powie „to było super, proszę jeszcze raz”. My jesteśmy blisko.",
+  "Dzięki, że lekcje z Tobą nie są tylko o ocenach, ale też o tym, żeby być dobrym człowiekiem.",
+  "Niech zawsze znajdzie się ktoś, kto poniesie Ci te sterty zeszytów na drugie piętro.",
+  "Zasługujesz dziś na brawa, kwiaty i chociaż jedną godzinę, w której nikt Cię o nic nie zapyta.",
+  "Dziękujemy za wszystkie razy, kiedy wystarczyło jedno „dasz radę” i naprawdę dawaliśmy.",
+  "Życzymy natchnienia na każdą lekcję i klas, które będą je doceniać.",
+  "Dzięki, że uczysz z pasją. Widać, że to Cię obchodzi, i to się udziela.",
+  "Niech Ci się wiedzie tak, jak nam wychodzi odpisywanie zadania na przerwie, czyli błyskawicznie.",
+  "Za Twoją wytrwałość, poczucie humoru i niekończące się zapasy czerwonych długopisów. Dziękujemy.",
+  "W świecie, w którym wszyscy się spieszą, dziękujemy, że ktoś ma czas, żeby nas wysłuchać.",
+  "Niech kserówki się nie sklejają, drukarka nie zacina, a dziennik elektroniczny działa chociaż do końca lekcji.",
+  "Dzięki Tobie wiemy, że bycie nauczycielem to nie tylko zawód. Dziś odpocznij od niego.",
+  "Życzymy tyle radości z pracy, ile nerwów kosztują Cię nasze wymówki. Czyli bardzo, bardzo dużo.",
+  "Dziękujemy za każdą lekcję, na której mogliśmy powiedzieć, że czegoś nie rozumiemy, i nikt się nie śmiał.",
+  "Niech Twoje życie będzie jak dobre wypracowanie: z wstępem, rozwinięciem i szczęśliwym zakończeniem.",
+  "Wiemy, że czasem mamy swoje dni. Dziękujemy, że masz je z nami i mimo wszystko wracasz po więcej.",
+  "Życzymy, żeby ani jedna lekcja nie zaczynała się od szukania pilota do rzutnika.",
+  "Dziękujemy, że uczysz nas tego, czego nie ma w podstawie programowej: cierpliwości, szacunku i śmiechu.",
+  "Dziś możesz odpocząć. Tak, tak, my też nie wierzymy, że to prawda.",
+  "Niech uczniowie piszą Ci tylko dobre słowa. Te od nas są wyjątkowo szczere.",
+  "Dziękujemy, że z zagubionych robisz ludzi, którzy wiedzą, dokąd idą. Albo przynajmniej mają mapę.",
+  "Życzymy przerwy, która nigdy się nie kończy, i dzwonka, który zawsze dzwoni za późno.",
+  "Dzięki Tobie szkoła ma sens. Nie tylko dlatego, że trzeba do niej chodzić.",
+  "Niech żaden telefon nie zadzwoni na Twojej lekcji. Chyba że ktoś zadzwoni z wiadomością, że masz tydzień wolnego.",
+  "Prawie nikt tego nie mówi głośno, ale każdy z nas wie, że to dzięki takim ludziom jak Ty jesteśmy w stanie dojść do czegokolwiek.",
+  "Dziękujemy, że potrafisz powiedzieć „nie wiem, sprawdzimy”. Dzięki temu rośnie nasz szacunek do Ciebie.",
+  "Życzymy dnia z takim luzem, jakiego my nie mamy w czasie sprawdzianu z całego działu.",
+  "Za Twój spokój, kiedy w klasie wrze. Za Twój śmiech, kiedy trzeba. Za to, że jesteś. Dziękujemy.",
+  "Niech czerwony długopis zawsze będzie schowany, a zielony chętnie używany.",
+  "Obiecujemy, że w przyszłym roku będziemy grzeczniejsi. Ta obietnica jest ważna do końca tej lekcji.",
+  "Dziękujemy za wszystko, czego nie widać w dzienniku, a co zostaje z nami na lata.",
+  "Najlepsza lekcja, jaką od Ciebie dostaliśmy, nie była z podręcznika. Była o tym, że warto próbować, nawet jeśli nie od razu wychodzi. Dziękujemy."
+];
+const ikony=["⭐","🍎","📚","💐","✏️","🎓"];
+const kartka=document.getElementById("kartka");
+const tekst=document.getElementById("tekst");
+const olowek=document.getElementById("olowek");
+const licznik=document.getElementById("licznik");
+let numer=0;
+let ostatni=-1;
+let ile=0;
+let ostatniZnak=null;
+
+const czekaj=ms=>new Promise(r=>setTimeout(r,ms));
+
+function naPoczatek(){
+  ostatniZnak=null;
+  olowek.style.transform="translate("+(tekst.offsetLeft-22)+"px,"+(tekst.offsetTop+34)+"px)";
+}
+
+function przesun(el){
+  ostatniZnak=el;
+  const k=kartka.getBoundingClientRect();
+  const r=el.getBoundingClientRect();
+  const x=Math.min(r.right-k.left,k.width-26);
+  const y=r.bottom-k.top-6;
+  olowek.style.transform="translate("+(x-25)+"px,"+(y-108)+"px)";
+}
+
+async function wypisz(cel,tresc,id){
+  for(const slowo of tresc.split(" ")){
+    const w=document.createElement("span");
+    w.className="slowo";
+    cel.appendChild(w);
+    cel.appendChild(document.createTextNode(" "));
+    for(const z of slowo){
+      if(id!==numer)return false;
+      const l=document.createElement("span");
+      l.textContent=z;
+      w.appendChild(l);
+      przesun(l);
+      await czekaj(38+Math.random()*40);
+    }
+    await czekaj(60);
+  }
+  return true;
+}
+
+function spadek(ilosc){
+  for(let i=0;i<ilosc;i++){
+    const el=document.createElement("div");
+    el.className="spadek";
+    el.textContent=ikony[Math.floor(Math.random()*ikony.length)];
+    el.style.left=Math.random()*100+"vw";
+    el.style.fontSize=(18+Math.random()*24)+"px";
+    el.style.animationDuration=(3+Math.random()*3.5)+"s";
+    el.style.animationDelay=(Math.random()*.8)+"s";
+    el.style.setProperty("--obrot",(Math.random()*720-360)+"deg");
+    document.body.appendChild(el);
+    el.addEventListener("animationend",()=>el.remove());
+  }
+}
+
+async function pisz(nowe){
+  const id=++numer;
+  const nowa=nowe||ostatni<0;
+  tekst.innerHTML="";
+  olowek.classList.remove("radosc");
+  olowek.classList.add("pisze");
+  naPoczatek();
+  if(nowa){
+    let los;
+    do{los=Math.floor(Math.random()*zyczenia.length)}while(los===ostatni);
+    ostatni=los;
+    ile++;
+    licznik.textContent="Napisane życzenia: "+ile;
+  }
+  await czekaj(350);
+  if(!await wypisz(tekst,zyczenia[ostatni],id))return;
+  olowek.classList.remove("pisze");
+  void olowek.offsetWidth;
+  olowek.classList.add("radosc");
+  spadek(16);
+}
+
+olowek.addEventListener("click",()=>pisz(false));
+document.getElementById("dalej").addEventListener("click",()=>pisz(true));
+document.getElementById("kopiuj").addEventListener("click",async e=>{
+  const przycisk=e.currentTarget;
+  try{
+    await navigator.clipboard.writeText(tekst.textContent.trim());
+    przycisk.textContent="Skopiowano ✓";
+  }catch(err){
+    przycisk.textContent="Nie udało się";
+  }
+  setTimeout(()=>{przycisk.textContent="Kopiuj"},1500);
+});
+window.addEventListener("resize",()=>{
+  if(ostatniZnak)przesun(ostatniZnak);else naPoczatek();
+});
+
+naPoczatek();
+setTimeout(()=>pisz(true),800);
+setInterval(()=>spadek(1),2200);
+</script>
+</body>
+</html>
